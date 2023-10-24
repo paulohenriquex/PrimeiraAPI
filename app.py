@@ -63,7 +63,6 @@ livros = [
         'autor': 'J. R. R. Tolkien',
         'editora': 'HarperCollins Brasil',
     }
-
 ]
 
 
@@ -77,8 +76,17 @@ def obterLivroPorID(id):
     for livro in livros:
         if livro.get('id') == id:
             return jsonify(livro)
-        
 
 
+@app.route('/livros', methods=['POST'])
+def criarLivro():
+    novo_livro = request.get_json()
+    if not novo_livro:
+        return "Dados inválidos", 400
+    novo_livro['id'] = len(livros) + 1
+    livros.append(novo_livro)
+    return jsonify(novo_livro), 201
 
-app.run(port=5000, host='localhost', debug=True)
+
+if __name__ == '__main__':
+    app.run(port=5000, host='localhost', debug=True)
