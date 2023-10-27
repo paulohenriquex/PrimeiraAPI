@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Livros Cadastrados</title>
+    <link rel="stylesheet" href="static/livros-style.css" />
+  </head>
+  <body>
+    <h1>Livros Cadastrados</h1>
+    <ul>
+      {% for livro in livros %}
+      <li>
+        <strong>Nome: </strong>{{ livro.nome }} <br />
+        <strong>Autor: </strong> {{ livro.autor }} <br />
+        <strong>Ano: </strong> {{ livro.ano }} <br />
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

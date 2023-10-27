@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+}
+
+li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+strong {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Estilizar os valores dos livros */
+li span {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Estilizar os autores */
+.author {
+  font-style: italic;
+  color: #777;
+}
+
+/* Adicionar sombra nos itens da lista */
+li:hover {
+  box-shadow: 2px 2px 4px #ccc;
+}

@@ -1,92 +1,32 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template, redirect, url_for
 
 app = Flask(__name__)
-
-livros = [
-    {
-        'id': 1,
-        'titulo': 'O Senhor dos Anéis',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 2,
-        'titulo': 'O Hobbit',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 3,
-        'titulo': 'O Silmarillion',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 4,
-        'titulo': 'A Sociedade do Anel',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 5,
-        'titulo': 'As Duas Torres',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 6,
-        'titulo': 'O Retorno do Rei',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 7,
-        'titulo': 'O Silmarillion',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 8,
-        'titulo': 'O Silmarillion',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 9,
-        'titulo': 'O Silmarillion',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    },
-    {
-        'id': 10,
-        'titulo': 'O Silmarillion',
-        'autor': 'J. R. R. Tolkien',
-        'editora': 'HarperCollins Brasil',
-    }
-]
+livros = [{}]
 
 
-@app.route('/livros', methods=['GET'])
-def obter_livros():
-    return jsonify(livros)
+@app.route('/')
+def main():
+    return render_template('index.html')
 
 
-@app.route('/livros/<int:id>', methods=['GET'])
-def obterLivroPorID(id):
-    for livro in livros:
-        if livro.get('id') == id:
-            return jsonify(livro)
+@app.route('/cadastrar_livro', methods=['POST'])
+def cadastrar_livro():
+    nome_livro = request.form['nome_livro']
+    autor_livro = request.form['autor_livro']
+    ano_livro = request.form['ano_livro']
+    livros.append({'nome': nome_livro, 'autor': autor_livro, 'ano': ano_livro})
+    return redirect(url_for('mostrar_livros'))
 
 
-@app.route('/livros', methods=['POST'])
-def criarLivro():
-    novo_livro = request.get_json()
-    if not novo_livro:
-        return "Dados inválidos", 400
-    novo_livro['id'] = len(livros) + 1
-    livros.append(novo_livro)
-    return jsonify(novo_livro), 201
+@app.route('/mostrar_livros')
+def mostrar_livros():
+    return render_template('livros.html', livros=livros)
+
+
+@app.route('/alterar_livros')
+def alterar_livros():
+    return "Página de alteração de livros"
 
 
 if __name__ == '__main__':
-    app.run(port=5000, host='localhost', debug=True)
+    app.run(port=5000, debug=True)
